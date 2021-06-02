@@ -1,0 +1,55 @@
+select * from comivenda;
+select * from comvenda;
+
+delimiter $$
+create trigger tri_vendas_ai
+after insert on comivenda
+for each row
+begin
+	## declaro as variáveis que utilizarei
+	declare vtotal_itens float(10,2) DEFAULT 0;
+	declare vtotal_item float(10,2) DEFAULT 0;
+	declare total_item float(10,2);
+    DECLARE qtd_item INT DEFAULT 0; 
+    DECLARE fimloop INT DEFAULT 0; 
+    
+	## cursor para buscar os itens já registrados da venda
+	declare busca_itens cursor for
+		select n_valoivenda, n_qtdeivenda
+		from comivenda
+		where n_numevenda = new.n_numevenda;
+    
+	DECLARE CONTINUE HANDLER FOR SQLSTATE '04000' SET fimloop = 1;
+    
+	## abro o cursor
+	open busca_itens;
+		## declaro e inicio o loop
+		itens : loop
+            
+			IF fimloop = 1 THEN
+				LEAVE itens;
+			END IF;
+        
+			fetch busca_itens into total_item, qtd_item;
+			
+			## somo o valor total dos itens (produtos)
+			SET vtotal_item = total_item * qtd_item;
+			SET vtotal_itens = vtotal_itens + vtotal_item;
+            
+		end loop itens;
+	close busca_itens;
+    
+    SET vtotal_item = NEW.n_valoivenda * NEW.n_qtdeivenda;
+    
+	UPDATE comvenda 
+    SET n_totavenda = vtotal_itens - vtotal_item
+	WHERE n_numevenda = new.n_numevenda;
+end$$
+
+INSERT INTO comvenda VALUES (26, '26', 4, 2, 2, '668.32', 0, '568.9', '2022-06-20', NULL)
+
+DROP TRIGGER tri_vendas_ai
+
+Está pegando. Gravo porque pode ser que dê algum bug aí. >:)
+
+https://www.youtube.com/watch?v=xtKTI6Md4tI O outro vídeo mostrando que está funcionando no meu pc.
