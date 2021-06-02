@@ -1,0 +1,60 @@
+/*trabai*/
+
+/*1° questão:*/
+DELIMITER $$
+ CREATE PROCEDURE inserir_aluno (mat_aluno INTEGER, cod_curso INTEGER, dat_nasc DATE, 
+    tot_cred INTEGER, mgp DOUBLE, nom_alun VARCHAR (60), email VARCHAR (30))
+ DETERMINISTIC
+ BEGIN
+ INSERT INTO Aluno VALUES(mat_aluno, cod_curso, dat_nasc, tot_cred, mgp, nom_alun, email);
+ SELECT nom_alun AS Nome FROM Aluno ORDER BY mat_aluno DESC LIMIT 1;
+ END
+$$
+ 
+ DROP PROCEDURE inserir_aluno;
+ 
+ CALL inserir_aluno('', 1, '2016-05-3', 30, 9.3, 'Santiago Rodrigues', 'iago@gmail.com');
+ select * from Aluno;
+ 
+ DELETE from Aluno where mat_aluno > 6
+  CALL inserir_aluno('', 4, '1992-02-03', 45, 3.3, 'Infected Mushroom', 'becoming@insane.com');
+  
+  /*2° questão:*/
+  DELIMITER //
+  CREATE PROCEDURE contador_while(limite TINYINT UNSIGNED)
+  BEGIN
+		DECLARE cont INT;
+		DECLARE result Varchar(50);
+			SET cont = 1;
+			SET result = '';
+			WHILE cont <=5 DO
+				SET result = CONCAT(result, cont,',');
+				SET cont = cont + 1;
+			END WHILE;
+SELECT result;
+  END //
+    
+drop procedure contador_while
+    
+CALL contador_while(1);
+
+/*3° questão:*/
+
+DELIMITER $$$
+CREATE PROCEDURE contador_repeat(limite TINYINT UNSIGNED)
+BEGIN
+	DECLARE cont INT;
+	DECLARE result VARCHAR(50);
+		SET cont = 1;
+        SET result = '';
+			REPEAT
+            SET result = CONCAT(result, cont, ', ');
+            SET cont = cont + 1;
+            UNTIL cont = 10
+            END REPEAT;
+		SELECT result;
+END $$$
+
+DROP PROCEDURE contador_repeat
+
+CALL contador_repeat(1);
