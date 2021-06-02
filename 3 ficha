@@ -58,3 +58,6 @@ END $$$
 DROP PROCEDURE contador_repeat
 
 CALL contador_repeat(1);
+
+
+https://www.youtube.com/watch?v=8k3Yqeo68ok Aí um vídeo mostrando que no meu pc está funcionando.
