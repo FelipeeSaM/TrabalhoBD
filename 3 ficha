@@ -1,6 +1,8 @@
 /*trabai*/
 
 /*1° questão:*/
+
+##----------------------INSERIR COM UMA PROCEDURE----------------------##
 DELIMITER $$
  CREATE PROCEDURE inserir_aluno (mat_aluno INTEGER, cod_curso INTEGER, dat_nasc DATE, 
     tot_cred INTEGER, mgp DOUBLE, nom_alun VARCHAR (60), email VARCHAR (30))
@@ -14,11 +16,31 @@ $$
  DROP PROCEDURE inserir_aluno;
  
  CALL inserir_aluno('', 1, '2016-05-3', 30, 9.3, 'Santiago Rodrigues', 'iago@gmail.com');
- select * from Aluno;
+ select * from Aluno ORDER BY mat_aluno ASC;
  
  DELETE from Aluno where mat_aluno > 6
-  CALL inserir_aluno('', 4, '1992-02-03', 45, 3.3, 'Infected Mushroom', 'becoming@insane.com');
+  CALL inserir_aluno('', 2, '1983-02-03', 65, 4.3, 'Teste para o professor', 'bancode@dados');
+##----------------------INSERIR COM UMA PROCEDURE----------------------##
   
+##----------------------INSERIR COM UMA FUNCTION-----------------------##
+DELIMITER $$
+CREATE FUNCTION incerir_aluno(mat_aluno INTEGER, cod_curso INTEGER, dat_nasc DATE, 
+    tot_cred INTEGER, mgp DOUBLE, nom_alun VARCHAR (60), email VARCHAR (30))
+RETURNS VARCHAR(40)
+DETERMINISTIC
+BEGIN
+INSERT INTO Aluno (mat_aluno, cod_curso, dat_nasc, 
+    tot_cred, mgp, nom_alun, email)
+    VALUES (mat_aluno, cod_curso, dat_nasc, 
+    tot_cred, mgp, nom_alun, email);
+RETURN nom_alun;
+END $$
+
+SELECT incerir_aluno('', 4, '1999-09-09', 50, 5.2, 'Celular Nokia', 'celularnokia@roubado.com')
+##----------------------INSERIR COM UMA FUNCTION-----------------------##
+##----sim, ela se chama inCerir_aluno mesmo, e eu fiz depois de gravar o vídeo, mas aqui pega----##
+
+
   /*2° questão:*/
   DELIMITER //
   CREATE PROCEDURE contador_while(limite TINYINT UNSIGNED)
