@@ -36,7 +36,7 @@ INSERT INTO Aluno (mat_aluno, cod_curso, dat_nasc,
 RETURN nom_alun;
 END $$
 
-SELECT incerir_aluno('', 4, '1999-09-09', 50, 5.2, 'Celular Nokia', 'celularnokia@roubado.com')
+SELECT incerir_aluno('', 4, '1999-09-09', 50, 5.2, 'Celular Nokia', 'celularnokia@roubado.com') AS Aluno;
 ##----------------------INSERIR COM UMA FUNCTION-----------------------##
 ##----sim, ela se chama inCerir_aluno mesmo, e eu fiz depois de gravar o vídeo, mas aqui pega----##
 
